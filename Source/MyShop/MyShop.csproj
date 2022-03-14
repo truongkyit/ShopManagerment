@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B1F2CE53-111C-4C99-9120-C4106C01CA00}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>MyShop</RootNamespace>
+    <AssemblyName>MyShop</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Business\CategoryBusiness.cs" />
+    <Compile Include="Business\ClientBusiness.cs" />
+    <Compile Include="Business\Interface\ICategoryBusiness.cs" />
+    <Compile Include="Business\Interface\IClientBusiness.cs" />
+    <Compile Include="Business\Interface\IUserBusiness.cs" />
+    <Compile Include="Business\Interface\IOrderBusiness.cs" />
+    <Compile Include="Business\Interface\IOrderStatusBusiness.cs" />
+    <Compile Include="Business\Interface\IProductBusiness.cs" />
+    <Compile Include="Business\UserBusiness.cs" />
+    <Compile Include="Business\OrderBusiness.cs" />
+    <Compile Include="Business\OrderStatusBussiness.cs" />
+    <Compile Include="Business\ProductBusiness.cs" />
+    <Compile Include="Category.cs">
+      <DependentUpon>MyShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Client.cs">
+      <DependentUpon>MyShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Enum.cs" />
+    <Compile Include="Common\FunctionHelper.cs" />
+    <Compile Include="Common\HashPassword.cs" />
+    <Compile Include="DAO\CategoryDAO.cs" />
+    <Compile Include="DAO\ClientDAO.cs" />
+    <Compile Include="DAO\dbConnection.cs" />
+    <Compile Include="DAO\UserDAO.cs" />
+    <Compile Include="DAO\OrderDAO.cs" />
+    <Compile Include="DAO\OrderProductDAO.cs" />
+    <Compile Include="DAO\OrderStatusDAO.cs" />
+    <Compile Include="DAO\ProductDAO.cs" />
+    <Compile Include="Form\AllProductForm.xaml.cs">
+      <DependentUpon>AllProductForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Form\CategoryForm.xaml.cs">
+      <DependentUpon>CategoryForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Form\ProductForm.xaml.cs">
+      <DependentUpon>ProductForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Loading.xaml.cs">
+      <DependentUpon>Loading.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MyShop.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyShop.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MyShop.cs" />
+    <Compile Include="MyShop.Designer.cs">
+      <DependentUpon>MyShop.edmx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="MyShop1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Order.cs">
+      <DependentUpon>MyShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderProduct.cs">
+      <DependentUpon>MyShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderStatu.cs">
+      <DependentUpon>MyShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product.cs">
+      <DependentUpon>MyShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Role.cs">
+      <DependentUpon>MyShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="State\CategoryState.cs" />
+    <Compile Include="State\OrderState.cs" />
+    <Compile Include="State\ProductState.cs" />
+    <Compile Include="State\ProfileState.cs" />
+    <Compile Include="User.cs">
+      <DependentUpon>MyShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Report\SaleByMonth.xaml.cs">
+      <DependentUpon>SaleByMonth.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Report\UCProductNearlySoldOut.xaml.cs">
+      <DependentUpon>UCProductNearlySoldOut.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Report\UCProductTopOfSale.xaml.cs">
+      <DependentUpon>UCProductTopOfSale.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UCAllProduct.xaml.cs">
+      <DependentUpon>UCAllProduct.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ValueObject\CategoryVO\CategoryCreateVO.cs" />
+    <Compile Include="UserControls\UCAdminDashboard.xaml.cs">
+      <DependentUpon>UCAdminDashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UCReport.xaml.cs">
+      <DependentUpon>UCReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UCSaleDashboard.xaml.cs">
+      <DependentUpon>UCSaleDashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ValueObject\CategoryVO\CategoryUpdateVO.cs" />
+    <Compile Include="ValueObject\ClientVO\ClientCreateVO.cs" />
+    <Compile Include="ValueObject\ClientVO\ClientUpdateVO.cs" />
+    <Compile Include="ValueObject\OrderProductVO\OrderProductCreateVO.cs" />
+    <Compile Include="ValueObject\OrderProductVO\OrderProductUpdateVO.cs" />
+    <Compile Include="ValueObject\OrderStatusVO\OrderStatusCreateVO.cs" />
+    <Compile Include="ValueObject\OrderVO\OrderCreateVO.cs" />
+    <Compile Include="ValueObject\OrderVO\OrderUpdateVO.cs" />
+    <Compile Include="ValueObject\ProductVO\ProductCreateVO.cs" />
+    <Compile Include="ValueObject\ProductVO\ProductUpdateVO.cs" />
+    <Page Include="Form\AllProductForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Form\CategoryForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Form\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Form\ProductForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Loading.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="UserControls\Report\SaleByMonth.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Report\UCProductNearlySoldOut.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Report\UCProductTopOfSale.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\UCAdminDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\UCAllProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\UCReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\UCSaleDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EntityDeploy Include="MyShop.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MyShop.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="MyShop.edmx.diagram">
+      <DependentUpon>MyShop.edmx</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Aspose.Cells">
+      <Version>20.11.0</Version>
+    </PackageReference>
+    <PackageReference Include="DocumentFormat.OpenXml">
+      <Version>2.11.3</Version>
+    </PackageReference>
+    <PackageReference Include="EntityFramework">
+      <Version>6.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="ExcelDataReader">
+      <Version>3.6.0</Version>
+    </PackageReference>
+    <PackageReference Include="Fluent.Ribbon">
+      <Version>8.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="LiveCharts.Wpf">
+      <Version>0.9.7</Version>
+    </PackageReference>
+    <PackageReference Include="MaterialDesignThemes">
+      <Version>3.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="PropertyChanged.Fody">
+      <Version>3.3.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assert\icon\add2.png" />
+    <Resource Include="Assert\icon\box.png" />
+    <Resource Include="Assert\icon\delete.png" />
+    <Resource Include="Assert\icon\delete2.png" />
+    <Resource Include="Assert\icon\edit2.png" />
+    <Resource Include="Assert\icon\Excel.png" />
+    <Resource Include="Assert\icon\plus.png" />
+    <None Include="Assert\image\noimage.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assert\icon\order.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assert\icon\shop.png" />
+    <Content Include="MyShop.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MyShop.edmx</DependentUpon>
+      <LastGenOutput>MyShop.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="MyShop.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MyShop.edmx</DependentUpon>
+      <LastGenOutput>MyShop1.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

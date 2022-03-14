@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="MyShop.UserControls.UCAllProduct"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MyShop.UserControls"
+             xmlns:local1="clr-namespace:MyShop.Common"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800"
+              Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}">
+    <UserControl.Resources>
+        <local1:RelativeToAbsoluteConverter x:Key="absoluteConverter" />
+        <local1:ImagePathToBase64 x:Key="base64Converter" />
+        <local1:NumberToCurrencyVND x:Key="currencyVND" />
+        <Style x:Key="MyWaterMarkStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <Border Background="White" BorderBrush="#FF7D8683" BorderThickness="1"/>
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center" />
+                            <Label Margin="5,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center"
+                               Visibility="Collapsed" Foreground="Gray" FontFamily="Arial"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="DimGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+      
+    </UserControl.Resources>
+    <DockPanel Name="parrent" Margin="10 0 0 0">
+        <TextBox DockPanel.Dock="Top" Name="tbFindProduct"  Tag="Tìm kiếm sản phẩm ..." FontSize="18" Style="{StaticResource MyWaterMarkStyle}" Margin="10 0">
+        </TextBox>
+        <StackPanel DockPanel.Dock="Top" Margin="10">
+            <WrapPanel>
+                <TextBlock FontSize="20">Số lượng :</TextBlock>
+                <TextBox Name="tbQuantity" Tag="Số lượng sản phẩm ..." FontSize="15" Style="{StaticResource MyWaterMarkStyle}" Margin="10 0" Width="200"></TextBox>
+            </WrapPanel>
+            <TextBlock FontWeight="DemiBold" >Ghi chú: Bạn chỉ có thể thêm sản phẩm nếu số lượng tồn kho trên 0!!</TextBlock>
+            <WrapPanel Margin="0 5 0 0">
+                <Button Name="btnDone">Hoàn tất</Button>
+                <Button Name="btnCancel">Hủy bỏ</Button>
+            </WrapPanel>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Left" Name="Pagination" >
+            <Button  Margin="2" IsEnabled="{Binding previus}" Name="btnPrevius">Previous</Button>
+            <Button Margin="2" IsEnabled="{Binding next}" Name="btnNext" >Next</Button>
+        </StackPanel>
+        <ListView x:Name="ProductLV" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel HorizontalAlignment="Center" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <materialDesign:Card HorizontalAlignment="Center" Padding="10"  Width="{Binding Path=ActualWidth, ElementName=parrent, Converter={local1:PercentageConverter},ConverterParameter='0.2'}">
+                        <StackPanel>
+                            <Image Source="{Binding ImagePath, Converter={StaticResource absoluteConverter}}" RenderOptions.BitmapScalingMode="HighQuality"></Image>
+                            <TextBlock  Text="{Binding Name}" FontWeight="ExtraLight" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" FontSize="15"></TextBlock>
+                            <TextBlock Text="{Binding Price, Converter={StaticResource currencyVND}}" FontWeight="DemiBold" Foreground="#bf081f"></TextBlock>
+                            <TextBlock>Số lượng còn lại: <TextBlock FontWeight="DemiBold" Text="{Binding Quantity}"></TextBlock></TextBlock>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </DockPanel>
+</UserControl>

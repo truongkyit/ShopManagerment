@@ -1,0 +1,195 @@
+﻿<UserControl x:Class="MyShop.UserControls.UCSaleDashboard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MyShop.UserControls"
+             xmlns:local1="clr-namespace:MyShop.Common"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800"
+              Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}">
+    <UserControl.Resources>
+        <local1:RelativeToAbsoluteConverter x:Key="absoluteConverter" />
+        <local1:ImagePathToBase64 x:Key="base64Converter" />
+        <local1:NumberToCurrencyVND x:Key="currencyVND" />
+        <Style x:Key="MyWaterMarkStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <Border Background="White" BorderBrush="#FF7D8683" BorderThickness="1"/>
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center" />
+                            <Label Margin="5,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center"
+                               Visibility="Collapsed" Foreground="Gray" FontFamily="Arial"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="DimGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.7*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <DockPanel Name="ContentLeft">
+            <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Padding="0 3" FontSize="20">Chi tiết</TextBlock>
+            <WrapPanel DockPanel.Dock="Top">
+                <Button Name="btnAddProduct" Margin="0 0 5 0">Thêm sản phẩm</Button>
+                <Button Name="btnDeleteProduct">Xóa sản phẩm</Button>
+                <TextBlock Margin="20 0 0 0 " VerticalAlignment="Center" FontSize="{Binding ElementName=FontSizeParrent,Path=FontSize}">Mode:<TextBlock Margin="10 0 0 0" Name="Mode"></TextBlock></TextBlock>
+            </WrapPanel>
+            <WrapPanel DockPanel.Dock="Bottom">
+                <Button Margin="10 0 10 0" Name="btnDone">Hoàn tất</Button>
+                <Button Margin="10 0 10 0" Name="btnCancel">Hủy bỏ</Button>
+            </WrapPanel>
+            <StackPanel Name="OrderDetail">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Name="FontSizeParrent" FontSize="15">Mã đơn hàng : <TextBlock Name="FontWeightParrent" FontWeight="DemiBold" Text="{Binding Code}"></TextBlock></TextBlock>
+                    <DockPanel Grid.Column="1">
+                        <TextBlock FontSize="17" HorizontalAlignment="Center" Margin="0 5 5 0">Tình trạng</TextBlock>
+                        <ComboBox Name="cbbStatusOrder" FontSize="14" DisplayMemberPath="Description" SelectedValuePath="Value" SelectedValue="{Binding Status}">
+                        </ComboBox>
+                    </DockPanel>
+                </Grid>
+                <TextBlock FontSize="{Binding ElementName=FontSizeParrent,Path=FontSize}">Tổng tiền : <TextBlock FontWeight="{Binding ElementName=FontWeightParrent,Path=FontWeight}" Text="{Binding TotalAmount, Converter={StaticResource currencyVND}}"></TextBlock></TextBlock>
+                <TextBlock FontSize="{Binding ElementName=FontSizeParrent,Path=FontSize}">Ngày tạo : <TextBlock FontWeight="{Binding ElementName=FontWeightParrent,Path=FontWeight}" Text="{Binding CreatedAt}"></TextBlock></TextBlock>
+                <DockPanel LastChildFill="True" Margin="0 0 0 5">
+                    <TextBlock Width="{Binding ElementName=clientName,Path=ActualWidth}" FontSize="{Binding ElementName=FontSizeParrent,Path=FontSize}" Margin="0 0 5 0">Địa chỉ :</TextBlock>
+                    <TextBox Name="tbAddress" Tag="Nhập địa chỉ giao" Text="{Binding Address}"  Style="{StaticResource MyWaterMarkStyle}"></TextBox>
+                </DockPanel>
+                <DockPanel LastChildFill="True"  Margin="0 0 0 5" DataContext="{Binding client}">
+                    <TextBlock FontSize="{Binding ElementName=FontSizeParrent,Path=FontSize}" Margin="0 0 5 0" Name="clientName">Tên khách hàng :</TextBlock>
+                    <TextBox Name="tbName" Tag="Nhập tên khách hàng" Text="{Binding Name}"  Style="{StaticResource MyWaterMarkStyle}"></TextBox>
+                </DockPanel>
+                <DockPanel LastChildFill="True"  Margin="0 0 0 5"  DataContext="{Binding client}">
+                    <TextBlock Width="{Binding ElementName=clientName,Path=ActualWidth}" FontSize="{Binding ElementName=FontSizeParrent,Path=FontSize}" Margin="0 0 5 0">Số điện thoại :</TextBlock>
+                    <TextBox Name="tbPhoneNumber" Tag="Nhập số điện thoại" Text="{Binding PhoneNumber}" Style="{StaticResource MyWaterMarkStyle}"></TextBox>
+                </DockPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="37*"/>
+                        <ColumnDefinition Width="363*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListView SelectionMode="Single" Name="OrderProductLV"
+                    Height="{Binding Path=ActualHeight, ElementName=ContentRight, Converter={local1:PercentageConverter},ConverterParameter='0.5'}" Grid.ColumnSpan="2" >
+                        <ListView.Resources>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                            <local1:OrdinalConverter x:Key="OrdinalConverter" />
+                            <DataTemplate x:Key="OrdinalColumnDataTemplate">
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListViewItem},
+                    Converter={StaticResource ResourceKey=OrdinalConverter}}" HorizontalAlignment="Right" />
+                            </DataTemplate>
+                        </ListView.Resources>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="#" CellTemplate="{StaticResource ResourceKey=OrdinalColumnDataTemplate}" Width="30" />
+                                <GridViewColumn Header="Tên">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding Name}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Số lượng"  DisplayMemberBinding="{Binding Quantity}">
+                                </GridViewColumn>
+                                <GridViewColumn Header="Giá tiền" DisplayMemberBinding="{Binding Amount ,Converter={StaticResource currencyVND}}"></GridViewColumn>
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <TextBlock TextWrapping="Wrap" Text="Tổng tiền"></TextBlock>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding TotalAmount ,Converter={StaticResource currencyVND}}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                </Grid>
+            </StackPanel>
+        </DockPanel>
+        <DockPanel Grid.Column="1" Name="ContentRight" >
+            <DockPanel  DockPanel.Dock="Top" Name="BoxFilter">
+                <TextBlock HorizontalAlignment="Center" Padding="0 3" FontSize="20" DockPanel.Dock="Top">Lịch sử đơn hàng</TextBlock>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="0.4*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBox Name="tbFindOrder" Tag="Tìm kiếm đơn hàng theo mã code" Text="{Binding text}" FontSize="15" Style="{StaticResource MyWaterMarkStyle}" ></TextBox>
+                    <TextBlock Grid.Column="1" TextWrapping="Wrap" FontSize="15" Margin="10 0 0 0">Tìm theo trạng thái:</TextBlock>
+                    <ComboBox Grid.Column="2" Name="cbbFilterStatus" DisplayMemberPath="Description" SelectedValuePath="Value" Margin="5 0 0 0" SelectedValue="{Binding ValueStatus}">
+                    </ComboBox>
+                    <TextBlock Grid.ColumnSpan="3" Grid.Row="1" Height="5" FontWeight="Bold" Foreground="Snow"/>
+                    <TextBox Name="tbFindByPrice" Text="{Binding MoneySearch}" Margin="0 5 0 0" Tag="Số tiền cần lọc" Grid.Row="2" Grid.Column="0"  FontSize="15" Style="{StaticResource MyWaterMarkStyle}" ></TextBox>
+                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1" Orientation="Horizontal">
+                        <WrapPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="10 0 0 0">
+                            <TextBlock TextWrapping="WrapWithOverflow">Tìm thấp hơn(mặc định lớn hơn)</TextBlock>
+                            <ToggleButton HorizontalAlignment="Left" IsChecked="{Binding BelowMoney}"></ToggleButton>
+                        </WrapPanel>
+                        <Button  Name="btnFilterAll" Margin="20 0 0 0">Lọc</Button>
+                        <Button  Name="btnUnFilterAll" Margin="20 0 0 0">Hủy Lọc</Button>
+                    </StackPanel>
+                </Grid>
+            </DockPanel>
+            <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Name="paginationOrder">
+                <Button Margin="10 0 10 0" Name="btnPrevius" IsEnabled="{Binding previus}">Previus</Button>
+                <Button Margin="10 0 10 0" Name="btnNext" IsEnabled="{Binding next}">Next</Button>
+            </WrapPanel>
+            <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Name="OrderHistoryLV">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel HorizontalAlignment="Center" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <materialDesign:Card HorizontalAlignment="Center" Padding="10"  Width="{Binding Path=ActualWidth, ElementName=ContentRight, Converter={local1:PercentageConverter},ConverterParameter='0.28'}">
+                            <StackPanel>
+                                <Image Source="/assert/icon/order.png" RenderOptions.BitmapScalingMode="HighQuality"></Image>
+                                <TextBlock FontWeight="{Binding ElementName=FontWeightParrent,Path=FontWeight}">Mã đơn hàng : <TextBlock Text="{Binding Code}"></TextBlock></TextBlock>
+                                <TextBlock FontSize="{Binding ElementName=FontSizeParrent,Path=FontSize}" TextWrapping="Wrap">Ngày tạo : <TextBlock FontWeight="{Binding ElementName=FontWeightParrent,Path=FontWeight}" Text="{Binding CreatedAt}" TextWrapping="Wrap"></TextBlock></TextBlock>
+                                <TextBlock FontSize="{Binding ElementName=FontSizeParrent,Path=FontSize}" TextWrapping="Wrap" DataContext="{Binding OrderStatu}">Tình trạng : <TextBlock FontWeight="{Binding ElementName=FontWeightParrent,Path=FontWeight}" Text="{Binding Description}" TextWrapping="Wrap"></TextBlock></TextBlock>
+                                <TextBlock FontSize="{Binding ElementName=FontSizeParrent,Path=FontSize}" TextWrapping="Wrap">Tình trạng : <TextBlock FontWeight="{Binding ElementName=FontWeightParrent,Path=FontWeight}" Text="{Binding TotalAmount}" TextWrapping="Wrap"></TextBlock></TextBlock>
+                            </StackPanel>
+                        </materialDesign:Card>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </DockPanel>
+    </Grid>
+</UserControl>
